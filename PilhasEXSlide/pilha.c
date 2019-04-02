@@ -1,15 +1,22 @@
 #include "pilha.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 
-Pilha *InicializaPilha(Pilha *p, int c){
+void InicializaPilha(Pilha *p, int c){
     p->topo = -1;
     p->dados = malloc(sizeof(int)*c);
     p->capacidade = c;
-    return p;
 }
 
+void Desaloca_pilha(Pilha *p1){
+    int i;
+    for(i=0;i<p1->capacidade;i++){
+        free(p1->dados[i]);
+    }
+    free(p1);
+}
 int TestaCheia(Pilha *p){
     if(p->topo < p->capacidade){
         return 0;
@@ -32,7 +39,6 @@ void Empilha(Pilha *p, int nro){
     }else{
         p->dados[p->topo + 1] = nro;
         p->topo++;
-        printf("Empilhada com sucesso!\n");
     }
 }
 
@@ -42,12 +48,11 @@ void Desempilha(Pilha *p){
         return;
     }else{
         p->topo--;
-        printf("Desempilhada com sucesso!\n");
     }
 }
 
 int OlhaTopo(Pilha p){
-    return p.topo;
+    return p.dados[p.topo];
 }
 void MostraPilha(Pilha p){
     int i;
