@@ -67,8 +67,17 @@ void printaFila(Fila f){
   printf("Nro de elementos: %d\n", f.nroelem);
   printf("Inicio: %d\n", f.inicio);
   printf("Fim: %d\n", f.fim);
-  for(i=f.inicio;i<f.fim;i++){
-    printf("Nro na posi %d: %d\n", i, f.dados[i]);
+  if(f.inicio<f.fim){
+    for(i=f.inicio;i<f.fim;i++){
+      printf("Nro na posi %d: %d\n", i, f.dados[i]);
+    }
+  }else{
+    for(i=f.inicio;i<f.capacidade;i++){
+      printf("Nro na posi %d: %d\n", i, f.dados[i]);
+    }
+    for(i=0;i<f.fim;i++){
+      printf("Nro na posi %d: %d\n", i, f.dados[i]);
+    }
   }
   return;
 }
