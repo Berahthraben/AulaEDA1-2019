@@ -11,7 +11,7 @@ void InicializaPilha(Pilha *p, int c);
 int TestaCheia(Pilha *p);
 int TestaVazia(Pilha *p);
 void Empilha(Pilha *p, int nro);
-void Desempilha(Pilha *p);
+int Desempilha(Pilha *p);
 int OlhaTopo(Pilha p);
 void MostraPilha(Pilha p);
 void Desaloca_pilha(Pilha *p1);
