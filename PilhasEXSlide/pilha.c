@@ -12,9 +12,7 @@ void InicializaPilha(Pilha *p, int c){
 
 void Desaloca_pilha(Pilha *p1){
     int i;
-    for(i=0;i<p1->capacidade;i++){
-        free(p1->dados[i]);
-    }
+    free(p1->dados);
     free(p1);
 }
 int TestaCheia(Pilha *p){
@@ -42,13 +40,16 @@ void Empilha(Pilha *p, int nro){
     }
 }
 
-void Desempilha(Pilha *p){
+int Desempilha(Pilha *p){
+    int temp;
     if(TestaVazia(p)==VAZIA){
         printf("Pilha vazia!\n");
-        return;
+        return VAZIA;
     }else{
+        temp = p->dados[p->topo];
         p->topo--;
     }
+    return temp;
 }
 
 int OlhaTopo(Pilha p){
