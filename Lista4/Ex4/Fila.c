@@ -43,13 +43,13 @@ void InsereFim(Fila *f, int nro){
     printf("Fila cheia!\n");
     return;
   }
-  f->dados[f->fim] = nro;
   f->nroelem++;
-  if(f->fim==0){
-    f->fim=f->capacidade;
+  if(f->fim==f->capacidade){
+    f->fim=0;
   }else{
     f->fim++;
   }
+  f->dados[f->fim] = nro;
 }
 int RemoveFim(Fila *f){
   if(TestaVazia(*f)==VAZIA){
@@ -83,23 +83,32 @@ int TestaCheia(Fila f){
   return 0;
 }
 void MostraFila(Fila f){
-  printf("Nro de elementos: %d\n", f.nroelem);
-  printf("Capacidade: %d\n", f.capacidade);
-  printf("Inicio: %d\n", f.inicio);
-  printf("Fim: %d\n", f.fim);
-  printf("TamInfo: %d\n", f.tam_info);
+  //printf("Nro de elementos: %d\n", f.nroelem);
+  //printf("Capacidade: %d\n", f.capacidade);
+  //printf("Inicio: %d\n", f.inicio);
+  //printf("Fim: %d\n", f.fim);
+  //printf("TamInfo: %d\n", f.tam_info);
   printf("Fila: \n");
   int i;
   if(f.inicio > f.fim){
+    for(i=0;i<f.fim+1;i++){
+      printf(" | %d", f.dados[i]);
+    }
+    for(i=f.fim+1;i<f.inicio;i++){
+      printf(" | 0");
+    }
     for(i=f.inicio;i<f.capacidade;i++){
       printf(" | %d", f.dados[i]);
     }
-    for(i=0;i<f.fim-1;i++){
-      printf(" | %d", f.dados[i]);
-    }
   }else{
+    for(i=0;i<f.inicio;i++){
+      printf(" | 0");
+    }
     for(i=f.inicio;i<f.fim;i++){
       printf(" | %d", f.dados[i]);
+    }
+    for(i=f.fim;i<f.capacidade;i++){
+      printf(" | 0");
     }
   }
   printf(" |\n");
