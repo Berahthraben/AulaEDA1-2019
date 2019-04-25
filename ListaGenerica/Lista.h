@@ -15,7 +15,10 @@ typedef struct{
 
 void Inicializa_Lista(Lista *l, int tam_info);
 int InserirListaInicio(Lista *l, int elemento);
-int RemoverLista(Lista *l);
-int MostraElemPosi(Lista *l);
+int RemoverListaInicio(Lista *l, void *info);
+int InserirListaFim(Lista *l, int elemento);
+int RemoverListaFim(Lista *l, void *info);
+int MostraElemPosi(Lista *l, int posi);
 int TestaVazia(Lista *l);
-void DesalocaLista(Lista *l);
+int DesalocaLista(Lista *l);
+void MostraLista(Lista *l, void (*mostra)(void *));
