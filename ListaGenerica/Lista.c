@@ -1,59 +1,69 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Lista.h"
 
 void Inicializa_Lista(Lista *l, int tam_info){
   l->tam_info = tam_info;
-  l->lista = null;
+  l->lista = NULL;
   l->qtd_elem = 0;
 }
 
-int InserirListaInicio(Lista *l, void *elemento);
+int InserirListaInicio(Lista *l, void *elemento){
   Elemento *temp = malloc(sizeof(Elemento));
-  if(temp==null){
+  if(temp==NULL){
     return 0;
   }
   temp->info = malloc(sizeof(l->tam_info));
-  if(temp->info==null){
+  if(temp->info==NULL){
     free(temp);
     return 0;
   }
   memcpy(temp->info, elemento, l->tam_info);
   temp->prox = l->lista;
   l->lista = temp;
+  l->qtd_elem++;
   return 1;
 }
 
 int InserirListaFim(Lista *l, void *elemento){
   Elemento *temp = malloc(sizeof(Elemento));
-  if(temp==null){
+  if(temp==NULL){
     return 0;
   }
   temp->info = malloc(sizeof(l->tam_info));
-  if(temp->info==null){
+  if(temp->info==NULL){
     free(temp);
     return 0;
   }
   memcpy(temp->info, elemento, l->tam_info);
-  temp->prox = null;
+  temp->prox = NULL;
   Elemento *aux=l->lista;
-  while(aux->prox!=null){
+  while(aux->prox!=NULL){
     aux = aux->prox;
   }
   aux->prox = temp;
+  l->qtd_elem++;
   return 1;
 }
-void *RemoverListaFim(Lista *l, void *info){
+
+int RemoverListaFim(Lista *l, void *info){
   if(TestaVazia(l)==VAZIA){
     return VAZIA;
   }
-  Elemento *aux = l->lista;
-  while(aux->prox!=null){
+  if(l->qtd_elem==1){
+    return RemoverListaInicio(l, info);
+  }
+  Elemento *aux;
+  aux = l->lista;
+  while(aux->prox->prox!=NULL){
     aux = aux->prox;
   }
-  memcpy(info, aux->info, l->tam_info);
-  free(aux->info);
-  free(aux);
+  memcpy(info, aux->prox->info, l->tam_info);
+  free(aux->prox->info);
+  free(aux->prox);
+  aux->prox = NULL;
+  l->qtd_elem--;
   return 1;
 }
 
@@ -61,17 +71,20 @@ int RemoverListaInicio(Lista *l, void *info){
   if(TestaVazia(l)==VAZIA){
     return VAZIA;
   }
-  Elemento *aux1 = l->lista;
-  Elemento *aux2 = aux1->prox;
+  Elemento *aux1;
+  Elemento *aux2;
+  aux1 = l->lista;
+  aux2 = aux1->prox;
   memcpy(info, aux1->info, l->tam_info);
   free(aux1->info);
   free(aux1);
   l->lista = aux2;
+  l->qtd_elem--;
   return 1;
 }
 
 int TestaVazia(Lista *l){
-  if(l->lista==null){
+  if(l->lista==NULL){
     return VAZIA;
   }else{
     return 0;
@@ -79,7 +92,7 @@ int TestaVazia(Lista *l){
 }
 void *RetornaElemPosi(Lista *l, int posi){
   if(posi>l->qtd_elem){
-    return null;
+    return NULL;
   }
   Elemento *aux = l->lista;
   int i;
@@ -91,10 +104,10 @@ void *RetornaElemPosi(Lista *l, int posi){
 
 int DesalocaLista(Lista *l){
   int i;
-  for(i=0;i<l->qtd_elem;i++){
+  for(i=0;i<l->qtd_elem-1;i++){
     void *temp;
-    int temp = RemoverListaInicio(l, temp);
-    if(temp==0){
+    int temp1 = RemoverListaInicio(l, temp);
+    if(temp1==0){
       printf("ERRO AO DESALOCAR!\n");
       return 0;
     }
@@ -125,7 +138,7 @@ void MostraLista(Lista *l, void (*mostra)(void *)){
   }else{
     printf("Dados da lista: \n");
     Elemento *aux = l->lista;
-    while(aux!=null){
+    while(aux!=NULL){
       mostra(aux->info);
       aux = aux->prox;
     }
