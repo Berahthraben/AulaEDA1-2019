@@ -17,6 +17,8 @@ void Inicializa_Lista(Lista *l, int tam_info);
 int InserirListaInicio(Lista *l, void *info);
 int RemoverListaInicio(Lista *l, void *info);
 int InserirListaFim(Lista *l, void *info);
+int InserirListaInd(Lista *l, void *info, int posi);
+int RemoverListaInd(Lista *l, void *info, int posi);
 int RemoverListaFim(Lista *l, void *info);
 int MostraElemPosi(Lista *l, int posi);
 int TestaVazia(Lista *l);
