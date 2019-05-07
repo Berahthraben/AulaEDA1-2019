@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Lista.h"
+
 void MostraInt(void *info){
   int *p = info;
   printf("%d\n", *p);
@@ -20,10 +21,11 @@ int main(void){
   a = 6;
   InserirListaFim(&l, temp);
   MostraLista(&l, MostraInt);
-  void *auxrem = malloc(sizeof(int));
-  RemoverListaFim(&l, auxrem);
+  a = 7;
+  InserirListaInd(&l, temp, 3);
   MostraLista(&l, MostraInt);
-  RemoverListaInicio(&l, auxrem);
+  void *auxrem = malloc(sizeof(int));
+  RemoverListaInd(&l, auxrem, 1);
   MostraLista(&l, MostraInt);
   DesalocaLista(&l);
   return 0;
