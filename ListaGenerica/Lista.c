@@ -104,14 +104,18 @@ void *RetornaElemPosi(Lista *l, int posi){
 
 int DesalocaLista(Lista *l){
   int i;
-  for(i=0;i<l->qtd_elem-1;i++){
-    void *temp;
+  printf("Nro elem: %d\n", l->qtd_elem);
+  void *temp = malloc(l->tam_info);
+  int tempqtd = l->qtd_elem;
+  for(i=0;i<tempqtd;i++){
     int temp1 = RemoverListaInicio(l, temp);
     if(temp1==0){
       printf("ERRO AO DESALOCAR!\n");
+      free(temp);
       return 0;
     }
   }
+  free(temp);
   return 1;
 /*  Elemento *aux1 = l->lista;
   Elemento *aux2 = l->lista->prox;
@@ -149,3 +153,58 @@ void MostraFloat(void *x){
   float *p = x;
   printf(".1f ", *p);
 }*/
+
+int InserirListaInd(Lista *l, void *info, int posi){
+  if(posi<0){
+    return 0;
+  }
+  if(posi>l->qtd_elem){
+    return 0;
+  }
+  if(posi==0){
+    return InserirListaInicio(l, info);
+  }
+  if(l->qtd_elem==posi){
+    return InserirListaFim(l, info);
+  }
+  int i;
+  Elemento *aux1 = l->lista;
+  for(i=0;i<(posi-1);i++){
+    aux1 = aux1->prox;
+  }
+  Elemento *temp = malloc(sizeof(Elemento));
+  if(temp==NULL){
+    return 0;
+  }
+  temp->info = malloc(sizeof(l->tam_info));
+  if(temp->info==NULL){
+    free(temp);
+    return 0;
+  }
+  memcpy(temp->info, info, l->tam_info);
+  temp->prox = aux1->prox;
+  aux1->prox = temp;
+  l->qtd_elem++;
+  return 1;
+}
+
+int RemoverListaInd(Lista *l, void *info, int posi){
+  if(TestaVazia(l)==VAZIA){
+    return 0;
+  }
+  if(posi>=l->qtd_elem){
+    return 0;
+  }
+  int i;
+  Elemento *aux = l->lista;
+  for(i=0;i<posi-1;i++){
+    aux = aux->prox;
+  }
+  Elemento *aux2 = aux->prox->prox;
+  memcpy(aux->prox->info, info, l->tam_info);
+  free(aux->prox->info);
+  free(aux->prox);
+  aux->prox = aux2;
+  l->qtd_elem--;
+  return 0;
+}
