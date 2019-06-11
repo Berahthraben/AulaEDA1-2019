@@ -29,5 +29,6 @@ int EncontraListaPosi(Lista *l, int coluna);
 void MostraValorPosi(MatrizEsp *m, int linha, int coluna);
 int AuxOp(Lista *l, int coluna);
 void SomaMatriz(MatrizEsp *m1, MatrizEsp *m2, MatrizEsp *m3);
+void MultiplicaMatriz(MatrizEsp *m1, MatrizEsp *m2, MatrizEsp *m3);
 void DesalocaMatriz(MatrizEsp *m);
 void MostraMatriz(MatrizEsp *m);
