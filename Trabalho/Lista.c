@@ -27,6 +27,9 @@ int InserirListaInicio(Lista *l, void *elemento){
 }
 
 int InserirListaFim(Lista *l, void *elemento){
+  if(TestaVazia(l)==VAZIA){
+    return InserirListaInicio(l, elemento);
+  }
   Elemento *temp = malloc(sizeof(Elemento));
   if(temp==NULL){
     return 0;
@@ -105,7 +108,6 @@ void *RetornaElemPosi(Lista *l, int posi){
 
 int DesalocaLista(Lista *l){
   int i;
-  printf("Nro elem: %d\n", l->qtd_elem);
   void *temp = malloc(l->tam_info);
   int tempqtd = l->qtd_elem;
   for(i=0;i<tempqtd;i++){
@@ -193,15 +195,22 @@ int RemoverListaInd(Lista *l, void *info, int posi){
   if(TestaVazia(l)==VAZIA){
     return 0;
   }
-  if(posi>=l->qtd_elem){
+  if(posi>l->qtd_elem){
     return 0;
+  }
+  if(posi==l->qtd_elem){
+    return RemoverListaFim(l, info);
+  }
+  if(posi==0){
+    return RemoverListaInicio(l, info);
   }
   int i;
   Elemento *aux = l->lista;
   for(i=0;i<posi-1;i++){
     aux = aux->prox;
   }
-  Elemento *aux2 = aux->prox->prox;
+  Elemento *aux2;
+  aux2 = aux->prox->prox;
   memcpy(aux->prox->info, info, l->tam_info);
   free(aux->prox->info);
   free(aux->prox);
