@@ -1,8 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "Lista.h"
 
 typedef struct{
   int coluna;
-  float valor;
+  int valor;
 }EntradaMatriz;
 
 typedef struct{
@@ -10,8 +13,11 @@ typedef struct{
   Lista lis;
 }MatrizEsp;
 
-int Inicializa_MatrizEsp(MatrizEsp *m, int linha, int coluna, int tam_info);
-int InsereValor(MatrizEsp *m, int linha, int coluna);
+int Inicializa_MatrizEsp(MatrizEsp *m, int linha, int coluna);
+int InsereValor(MatrizEsp *m, int linha, int coluna, void *entrada);
+int EditaValor(MatrizEsp *m, int linha, int coluna, void *entrada);
 int RemoveValor(MatrizEsp *m, int linha, int coluna);
+int EncontraColuna(Lista *l, int coluna);
+int EncontraListaPosi(Lista *l, int coluna);
 void MostraValorPosi(MatrizEsp *m, int linha, int coluna);
 void MostraMatriz(MatrizEsp *m);
