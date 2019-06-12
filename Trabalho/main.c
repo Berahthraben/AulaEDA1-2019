@@ -5,26 +5,6 @@
 
 
 int main(void){
-	/*MatrizEsp m;
-	Inicializa_MatrizEsp(&m, 5, 5);
-	MostraMatriz(&m);
-	EntradaMatriz en;
-	en.coluna = 2;
-	en.valor = 3;
-	void *temp = &en;
-	int temp2 = EditaValor(&m, 3, 2, temp);
-	MostraMatriz(&m);
-	en.coluna = 6;
-	en.valor = 60;
-	temp2 = EditaValor(&m, 3, 6, temp);
-	MostraMatriz(&m);
-	en.coluna = 7;
-	en.valor = 6;
-	temp2 = EditaValor(&m, 6, 7, temp);
-	MostraMatriz(&m);
-	temp2 = RemoveValor(&m, 3, 6);
-	MostraMatriz(&m);
-	DesalocaMatriz(&m);*/
     char resp = '0';
     int regresp;
     Registro reg;
@@ -239,6 +219,7 @@ int main(void){
                 }else if(temp=='2'){
                     if(reg.reg3==1){
                         DesalocaMatriz(reg.m3);
+                        reg.reg3 = 0;
                         reg.m3 = malloc(sizeof(MatrizEsp));
                     }
                     MultiplicaMatriz(reg.m2, reg.m1, reg.m3);
