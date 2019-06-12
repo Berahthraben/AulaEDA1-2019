@@ -108,17 +108,16 @@ void *RetornaElemPosi(Lista *l, int posi){
 
 int DesalocaLista(Lista *l){
   int i;
-  void *temp = malloc(l->tam_info);
   int tempqtd = l->qtd_elem;
   for(i=0;i<tempqtd;i++){
-    int temp1 = RemoverListaInicio(l, temp);
+    void *aux = malloc(l->tam_info);
+    int temp1 = RemoverListaInicio(l, aux);
     if(temp1==0){
       printf("ERRO AO DESALOCAR!\n");
-      free(temp);
       return 0;
     }
   }
-  free(temp);
+  free(l);
   return 1;
 /*  Elemento *aux1 = l->lista;
   Elemento *aux2 = l->lista->prox;

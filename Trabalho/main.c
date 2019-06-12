@@ -38,7 +38,9 @@ int main(void){
         if(resp=='0'){ //mostra menu
                 printf("Bem vindo a meu programa ruim sobre matrizes esparsas! Feito para EDA0001 com o professor Rui Jorge, em 01/2019\n\n"
                        "O programa aloca duas matrizes na memoria e permite o usuario manipular seus valores,\n"
-                       "bem como soma-las ou multiplica-las! Digite o numero (ou letra) correspondente para acessar as opcoes:\n\n"
+                       "bem como soma-las ou multiplica-las!\n"
+                       "NOTA: O registro 3 pode ser mostrado, mas nao alterado diretamente."
+                       "Digite o numero (ou letra) correspondente para acessar as opcoes:\n\n"
                         "0 - Mostrar esse dialogo novamente\n"
                         "1 - Criar Matriz em um dos registros\n"
                         "2 - Editar uma Matriz existente (digite 0 no elemento para remover uma entrada)\n"
@@ -47,7 +49,7 @@ int main(void){
                         "5 - Somar as duas matrizes no registro\n"
                         "6 - Multiplicar matrizes no registro (permite escolher a ordem)\n"
                         "e - Sair do programa\n"
-                        "Qualquer bug favor informar no Posto do Ipiranga. Um otimo ano pra você <3!\n");
+                        "Qualquer bug favor informar no Posto do Ipiranga. Um otimo ano pra voce <3!\n");
 
         }else if(resp=='1'){ //criar matriz
             printf("Em qual dos registros gostaria de colocar (1 ou 2)?\n");
@@ -150,7 +152,7 @@ int main(void){
                 printf("Resposta invalida! Retornando...\n");
             }
         }else if(resp=='3'){ //mostrar matriz
-            printf("Qual dos registros gostaria de mostrar? (1 ou 2)\n");
+            printf("Qual dos registros gostaria de mostrar? (1, 2 ou 3)\n");
             scanf("%d", &regresp);
             getchar();
             if(regresp==1){
@@ -165,6 +167,13 @@ int main(void){
                     printf("Erro! Nao ha matriz nesse registro. Retornando...\n");
                 }else{
                     MostraMatriz(reg.m2);
+                    printf("Mostrada com sucesso! Retornando...\n");
+                }
+            }else if(regresp==3){
+                if(reg.reg3==0){
+                    printf("Erro! Nao ha matriz nesse registro. Retornando...\n");
+                }else{
+                    MostraMatriz(reg.m3);
                     printf("Mostrada com sucesso! Retornando...\n");
                 }
             }else{
@@ -197,12 +206,14 @@ int main(void){
             }else{
                 printf("Resposta invalida! Retornando...");
             }
-        }else if(resp=='5'){
+        }else if(resp=='5'){ //somar matriz
             if(reg.reg1==0 || reg.reg2==0){
                 printf("Primeiro insira matrizes em ambos os registradores! Retornando...\n");
             }else{
                 if(reg.reg3==1){
                     DesalocaMatriz(reg.m3);
+                    reg.reg3 = 0;
+                    reg.m3 = malloc(sizeof(MatrizEsp));
                 }
                 SomaMatriz(reg.m1, reg.m2, reg.m3);
                 reg.reg3 = 1;
@@ -219,6 +230,7 @@ int main(void){
                 if(temp=='1'){
                     if(reg.reg3==1){
                         DesalocaMatriz(reg.m3);
+                        reg.reg3 = 0;
                         reg.m3 = malloc(sizeof(MatrizEsp));
                     }
                     MultiplicaMatriz(reg.m1, reg.m2, reg.m3);

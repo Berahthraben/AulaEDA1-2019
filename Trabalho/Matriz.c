@@ -189,7 +189,6 @@ void SomaMatriz(MatrizEsp *m1, MatrizEsp *m2, MatrizEsp *m3){ //soma m1 e m2, ar
         printf("Nao eh possivel somar matrizes de tamanhos diferentes!\n");
         return;
     }
-    m3 = malloc(sizeof(MatrizEsp));
     Inicializa_MatrizEsp(m3, m1->lin, m1->col);
     int i, j;
     Elemento *auxm1 = m1->lis.lista;
@@ -203,10 +202,10 @@ void SomaMatriz(MatrizEsp *m1, MatrizEsp *m2, MatrizEsp *m3){ //soma m1 e m2, ar
         auxm2j = auxm2->info;
         auxm3j = auxm3->info;
         for(j=0;j<m1->col;j++){
-            int somaf = AuxOp(auxm1j, j) + AuxOp(auxm2j, j);
+            int somaf = AuxOp(auxm1j, j+1) + AuxOp(auxm2j, j+1);
             if(somaf!=0){
                 EntradaMatriz envio;
-                envio.coluna = j;
+                envio.coluna = j+1;
                 envio.valor = somaf;
                 InserirListaFim(auxm3j, &envio);
             }
@@ -242,15 +241,11 @@ void MultiplicaMatriz(MatrizEsp *m1, MatrizEsp *m2, MatrizEsp *m3){
         for(coluna=0;coluna<m2->col;coluna++){
             int somageral = 0;
             Elemento *auxlog2 = auxm2;
-            printf("aqui\n");
             for(i=0;i<m1->col;i++){
                 int op1 = AuxOp(auxm1j, i+1);
                 int op2 = AuxOp(auxlog2->info, coluna+1);
-                printf("INDO SOMAR\n");
                 somageral = somageral + (op1 * op2);
-                printf("Somageral = %d\n", somageral);
                 auxlog2 = auxlog2->prox;
-                printf("final\n");
             }
             if(somageral!=0){
                 EntradaMatriz ent;
@@ -259,7 +254,6 @@ void MultiplicaMatriz(MatrizEsp *m1, MatrizEsp *m2, MatrizEsp *m3){
                 InserirListaFim(auxm3j, &ent);
             }
         }
-        printf("mudando linha!\n");
         auxm1 = auxm1->prox;
         auxm3 = auxm3->prox;
     }
@@ -282,13 +276,15 @@ int AuxOp(Lista *l, int coluna){ //retorna o valor na coluna especificada
     return 0;
 }
 void DesalocaMatriz(MatrizEsp *m){
-    Elemento *Aux1;
-    Aux1 = m->lis.lista;
+    Elemento *aux1;
+    aux1 = m->lis.lista;
     int i;
+    /*if(m->lis.qtd_elem == 1){
+        RemoverListaInicio()
+    }*/
     for(i=0;i<m->lin;i++){
-        DesalocaLista(Aux1->info);
-        Aux1 = Aux1->prox;
+        int temp = DesalocaLista(aux1->info);
+        aux1 = aux1->prox;
     }
-    DesalocaLista(&m->lis);
     free(m);
 }
